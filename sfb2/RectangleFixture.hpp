@@ -4,10 +4,11 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
-class Body;
+class Fixture;
 #include "Fixture.hpp"
 
-class RectangleFixture : public Fixture, protected RectangleShape {
+class RectangleFixture : public Fixture, private RectangleShape {
+	friend class Body;
 	
 	public:
 		using RectangleShape::getFillColor;
@@ -29,5 +30,6 @@ class RectangleFixture : public Fixture, protected RectangleShape {
 		RectangleFixture(const Vector2f& size, b2Fixture* fixture, Body& body);
 		
 		void update();
-	
+		void draw(RenderTarget& target, RenderStates states) const;
+		
 };

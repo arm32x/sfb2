@@ -77,6 +77,8 @@
 		<Unit filename="sfb2/Body.hpp" />
 		<Unit filename="sfb2/CircleBody.cpp" />
 		<Unit filename="sfb2/CircleBody.hpp" />
+		<Unit filename="sfb2/CircleFixture.cpp" />
+		<Unit filename="sfb2/CircleFixture.hpp" />
 		<Unit filename="sfb2/Fixture.cpp" />
 		<Unit filename="sfb2/Fixture.hpp" />
 		<Unit filename="sfb2/RectangleBody.cpp" />

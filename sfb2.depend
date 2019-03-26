@@ -1,9 +1,5 @@
 # depslib dependency file v1.0
-<<<<<<< HEAD
 1553542274 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\main.cpp
-=======
-1553614876 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\main.cpp
->>>>>>> master
 	<algorithm>
 	<ctime>
 	<functional>
@@ -432,25 +428,8 @@
 	<exception>
 	<string>
 
-1553010086 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\options.hpp
-	<algorithm>
-	<cctype>
-	<fstream>
-	<iostream>
-	<string>
-	<SFML/System/Vector2.hpp>
-	"libconfig.h++"
-
-1551739600 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\random.hpp
-	<ctime>
-	<random>
-
-<<<<<<< HEAD
-1553565416 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\world.hpp
+1553640244 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\world.hpp
 	<forward_list>
-=======
-1553614178 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\world.hpp
->>>>>>> master
 	<functional>
 	<iostream>
 	<queue>
@@ -459,6 +438,7 @@
 	"Body.hpp"
 	"CircleBody.hpp"
 	"RectangleBody.hpp"
+	"Fixture.hpp"
 
 1550678182 i:\school\gr. 10 – semester 2 pd. 2 – computer science\libraries\box2d\include\box2d\box2d.h
 	<Box2D/Common/b2Settings.h>
@@ -622,26 +602,30 @@
 1550678188 i:\school\gr. 10 – semester 2 pd. 2 – computer science\libraries\box2d\include\box2d\dynamics\joints\b2wheeljoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-<<<<<<< HEAD
-1553565562 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\body.hpp
+1553643120 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\body.hpp
 	<vector>
-=======
-1553614140 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\body.hpp
-	<bitset>
->>>>>>> master
 	<Box2D/Box2D.h>
 	<SFML/Graphics.hpp>
 	"Fixture.hpp"
 	"RectangleFixture.hpp"
 	"World.hpp"
 
-1553552176 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\circlebody.hpp
+1553643158 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\fixture.hpp
+	<Box2D/Box2D.h>
+	<SFML/Graphics.hpp>
+
+1553643076 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglefixture.hpp
+	<Box2D/Box2D.h>
+	<SFML/Graphics.hpp>
+	"Fixture.hpp"
+
+1553635094 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\circlebody.hpp
 	<Box2d/Box2D.h>
 	<SFML/Graphics.hpp>
 	"Body.hpp"
 	"World.hpp"
 
-1553552172 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglebody.hpp
+1553642118 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglebody.hpp
 	<Box2D/Box2D.h>
 	<SFML/Graphics.hpp>
 	"Body.hpp"
@@ -653,30 +637,6 @@
 	<SFML/System/Vector2.hpp>
 	"Body.hpp"
 
-1553529188 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\body.cpp
-	"Body.hpp"
-
-1553520516 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\circlebody.cpp
-	"CircleBody.hpp"
-
-1552012756 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\options.cpp
-	"Options.hpp"
-
-1551742222 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\random.cpp
-	"Random.hpp"
-
-1553520484 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglebody.cpp
-	"RectangleBody.hpp"
-
-1553521150 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\utilities.cpp
-	"Utilities.hpp"
-
-1553528458 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\world.cpp
-	"World.hpp"
-
-1553261832 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\util\options.cpp
-	"Options.hpp"
-
 1553261858 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\util\options.hpp
 	<algorithm>
 	<cctype>
@@ -686,23 +646,36 @@
 	<SFML/System/Vector2.hpp>
 	"libconfig.h++"
 
-1551742222 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\util\random.cpp
-	"Random.hpp"
-
 1551739600 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\util\random.hpp
 	<ctime>
 	<random>
 
-1553565526 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\fixture.hpp
-	<Box2D/Box2D.h>
-	<SFML/Graphics.hpp>
+1553520516 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\circlebody.cpp
+	"CircleBody.hpp"
+
+1553521150 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\utilities.cpp
+	"Utilities.hpp"
+
+1553640336 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\world.cpp
+	"World.hpp"
+
+1553261832 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\util\options.cpp
+	"Options.hpp"
+
+1551742222 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\util\random.cpp
+	"Random.hpp"
+
+1553641442 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglebody.cpp
+	"RectangleBody.hpp"
+
+1553642160 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\fixture.cpp
+	"Fixture.hpp"
 	"Body.hpp"
 
-1553565382 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglefixture.cpp
+1553643056 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglefixture.cpp
 	"RectangleFixture.hpp"
+	"Body.hpp"
 
-1553565396 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglefixture.hpp
-	<Box2D/Box2D.h>
-	<SFML/Graphics.hpp>
-	"Fixture.hpp"
+1553643140 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\body.cpp
+	"Body.hpp"
 

@@ -18,16 +18,15 @@ enum class BodyType {
 
 class Body : public Drawable {
 	friend class World;
-	friend bool operator==(Body&, Body&);
-	friend bool operator!=(Body&, Body&);
 
 	public:
 		void* userPointer = nullptr;
 		World& world; ///< The `World` that this `Body` exists in.
+		b2Body* internalBody; ///< A pointer to the `b2Body` represented by this `Body`.  Use only if no other option exists.
 		
-		RectangleFixture& createRectangleFixture(float x, float y, float width, float height, BodyType type);
-		RectangleFixture& createRectangleFixture(const Vector2f& position, const Vector2f& size, BodyType type);
-		RectangleFixture& createRectangleFixture(const FloatRect& rect, BodyType type);
+		RectangleFixture& createRectangleFixture(float x, float y, float width, float height);
+		RectangleFixture& createRectangleFixture(const Vector2f& position, const Vector2f& size);
+		RectangleFixture& createRectangleFixture(const FloatRect& rect);
 		
 		Vector2f getPosition() const;
 		void setPosition(float x, float y);
@@ -74,10 +73,9 @@ class Body : public Drawable {
 
 	protected:
 		Body(b2Body* body, World& world);
-		b2Body* internalBody; ///< A pointer to the `b2Body` represented by this `Body`.  Use only if no other option exists.
 		
-		virtual void update() { }
-		virtual void draw(RenderTarget& target, RenderStates states) const = 0;
+		void update();
+		void draw(RenderTarget& target, RenderStates states) const;
 	
 };
 

@@ -4,6 +4,28 @@ Body::Body(b2Body* body, World& world) : world(world), internalBody(body) {
 	body->SetUserData(this);
 }
 
+// TODO: Add support for offset/origin.  Parameters x and y are currently unused.
+RectangleFixture& Body::createRectangleFixture(float x, float y, float width, float height) {
+	b2FixtureDef fixtureDef;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.4f;
+	fixtureDef.restitution = 0.5f;
+	
+	b2PolygonShape shape;
+	shape.SetAsBox(width / world.ppm / 2.0f, height / world.ppm / 2.0f, b2Vec2(x / world.ppm, y / world.ppm), 0.0f);
+	fixtureDef.shape = &shape;
+	
+	b2Fixture* internalFixture = internalBody->CreateFixture(&fixtureDef);
+	RectangleFixture* wrapper = new RectangleFixture(Vector2f(width, height), internalFixture, *this);
+	return *wrapper;
+}
+RectangleFixture& Body::createRectangleFixture(const Vector2f& position, const Vector2f& size) {
+	return createRectangleFixture(position.x, position.y, size.x, size.y);
+}
+RectangleFixture& Body::createRectangleFixture(const FloatRect& rect) {
+	return createRectangleFixture(rect.left + rect.width / 2.0f, rect.top + rect.height / 2.0f, rect.width, rect.height);
+}
+
 Vector2f Body::getPosition() const {
 	return Vector2f(internalBody->GetPosition().x * world.ppm, internalBody->GetPosition().y * world.ppm);
 }
@@ -102,14 +124,27 @@ void Body::setAngularDamping(float angularDamping) { internalBody->SetAngularDam
 bool Body::isActive() const { return internalBody->IsActive(); }
 void Body::setActive(bool active) { internalBody->SetActive(active); }
 
+// TODO: Implement ‘FixtureList’ wrapper around ‘internalBody->GetFixtureList()’ with iterators.
 std::vector<std::reference_wrapper<Fixture>> Body::getFixtureList() const {
-	std::vector<std:::reference_wrapper<Fixture>> result;
+	std::vector<std::reference_wrapper<Fixture>> result;
 	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
 		result.push_back(std::ref(*static_cast<Fixture*>(internalFixture->GetUserData())));
 	}
 	return result;
 }
-void Body::invalidateFixtureList() { cachedFixtureListValid = false; }
+
+void Body::update() {
+	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
+		Fixture& fixture = *static_cast<Fixture*>(internalFixture->GetUserData());
+		fixture.update();
+	}
+}
+void Body::draw(RenderTarget& target, RenderStates states) const {
+	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
+		Fixture& fixture = *static_cast<Fixture*>(internalFixture->GetUserData());
+		if (fixture.isVisible()) target.draw(fixture);
+	}
+}
 
 bool operator==(const Body& lhs, const Body& rhs) { return lhs.internalBody == rhs.internalBody; }
 bool operator!=(const Body& lhs, const Body& rhs) { return !(lhs == rhs); }

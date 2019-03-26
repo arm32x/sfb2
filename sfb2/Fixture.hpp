@@ -4,13 +4,15 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
-#include "Body.hpp"
+class Body;
 
 class Fixture : public Drawable {
+	friend class Body;
 	
 	public:
 		void* userPointer;
 		Body& body;
+		b2Fixture* internalFixture; ///< A pointer to the fixture that this class represents.  Use only if no other option exists.
 		
 		bool isTouching(const Vector2f& point) const;
 		std::function<void(Fixture&)> onContactBegin;
@@ -24,10 +26,8 @@ class Fixture : public Drawable {
 		
 	protected:
 		Fixture(b2Fixture* fixture, Body& body);
-		b2Fixture* internalFixture; ///< A pointer to the fixture that this class represents.  Use only if no other option exists.
 		
 		virtual void update() { }
-		virtual void draw(RenderTarget& target, RenderStates states) const = 0;
 	
 	private:
 		bool visible = true;

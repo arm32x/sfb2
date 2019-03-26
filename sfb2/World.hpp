@@ -14,11 +14,13 @@ class CircleBody;
 #include "CircleBody.hpp"
 class RectangleBody;
 #include "RectangleBody.hpp"
+#include "Fixture.hpp"
 
 class World : public Drawable {
 
 	public:
 		float ppm; ///< The number of pixels per meter in this `World`.
+		b2World internalWorld; ///< The internal `b2World` represented by this `World`.  Use only if no other option exists.
 
 		World(const Vector2f& gravity = Vector2f(0.0f, 9.807f), float pixelsPerMeter = 32.0f);
 		World(float gravityDown, float pixelsPerMeter = 32.0f);
@@ -30,16 +32,16 @@ class World : public Drawable {
 		CircleBody& createCircleBody(float x, float y, float radius, BodyType type);
 		CircleBody& createCircleBody(const Vector2f& position, float radius, BodyType type);
 		
+		Body& createBody(BodyType type);
+		
 		void destroyBody(Body& body);
 
 		void step(Time timeStep, int velocityIterations = 8, int positionIterations = 3);
 		
-		std::function<void(Body&, Body&)> onContactBegin;
-		std::function<void(Body&, Body&)> onContactEnd;
+		std::function<void(Fixture&, Fixture&)> onContactBegin;
+		std::function<void(Fixture&, Fixture&)> onContactEnd;
 
 	protected:
-		b2World internalWorld; ///< The internal `b2World` represented by this `World`.  Use only if no other option exists.
-		
 		void draw(RenderTarget& target, RenderStates states) const;
 		
 	private:
