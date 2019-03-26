@@ -8,7 +8,7 @@ using namespace sf;
 
 class World;
 
-enum BodyType {
+enum class BodyType {
     StaticBody = 0,
     KinematicBody = 1,
     DynamicBody = 2
