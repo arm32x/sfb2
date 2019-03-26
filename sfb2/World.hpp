@@ -1,5 +1,6 @@
 #pragma once
 
+#include <forward_list>
 #include <functional>
 #include <iostream>
 #include <queue>
@@ -9,17 +10,15 @@
 using namespace sf;
 
 #include "Body.hpp"
-#include "CircleBody.hpp"
-#include "RectangleBody.hpp"
-
 class CircleBody;
+#include "CircleBody.hpp"
 class RectangleBody;
+#include "RectangleBody.hpp"
 
 class World : public Drawable {
 
 	public:
 		float ppm; ///< The number of pixels per meter in this `World`.
-		b2World internalWorld; ///< The internal `b2World` represented by this `World`.  Use only if no other option exists.
 
 		World(const Vector2f& gravity = Vector2f(0.0f, 9.807f), float pixelsPerMeter = 32.0f);
 		World(float gravityDown, float pixelsPerMeter = 32.0f);
@@ -39,6 +38,8 @@ class World : public Drawable {
 		std::function<void(Body&, Body&)> onContactEnd;
 
 	protected:
+		b2World internalWorld; ///< The internal `b2World` represented by this `World`.  Use only if no other option exists.
+		
 		void draw(RenderTarget& target, RenderStates states) const;
 		
 	private:

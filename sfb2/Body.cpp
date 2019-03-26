@@ -99,22 +99,17 @@ void Body::setLinearDamping(float linearDamping) { internalBody->SetLinearDampin
 float Body::getAngularDamping() const { return internalBody->GetAngularDamping(); }
 void Body::setAngularDamping(float angularDamping) { internalBody->SetAngularDamping(angularDamping); }
 
-bool Body::isSensor() const {
-	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
-		if (!internalFixture->IsSensor()) return false;
-	}
-	return true;
-}
-void Body::setSensor(bool value) {
-	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
-		internalFixture->SetSensor(value);
-	}
-}
-
 bool Body::isActive() const { return internalBody->IsActive(); }
 void Body::setActive(bool active) { internalBody->SetActive(active); }
-bool Body::isVisible() const { return visible; }
-void Body::setVisible(bool visible) { this->visible = visible; }
+
+std::vector<std::reference_wrapper<Fixture>> Body::getFixtureList() const {
+	std::vector<std:::reference_wrapper<Fixture>> result;
+	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
+		result.push_back(std::ref(*static_cast<Fixture*>(internalFixture->GetUserData())));
+	}
+	return result;
+}
+void Body::invalidateFixtureList() { cachedFixtureListValid = false; }
 
 bool operator==(const Body& lhs, const Body& rhs) { return lhs.internalBody == rhs.internalBody; }
 bool operator!=(const Body& lhs, const Body& rhs) { return !(lhs == rhs); }

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1553541998 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\main.cpp
+1553542274 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\main.cpp
 	<algorithm>
 	<ctime>
 	<functional>
@@ -441,7 +441,8 @@
 	<ctime>
 	<random>
 
-1553527684 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\world.hpp
+1553565416 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\world.hpp
+	<forward_list>
 	<functional>
 	<iostream>
 	<queue>
@@ -613,19 +614,21 @@
 1550678188 i:\school\gr. 10 – semester 2 pd. 2 – computer science\libraries\box2d\include\box2d\dynamics\joints\b2wheeljoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1553529170 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\body.hpp
-	<bitset>
+1553565562 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\body.hpp
+	<vector>
 	<Box2D/Box2D.h>
 	<SFML/Graphics.hpp>
+	"Fixture.hpp"
+	"RectangleFixture.hpp"
 	"World.hpp"
 
-1553520502 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\circlebody.hpp
+1553552176 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\circlebody.hpp
 	<Box2d/Box2D.h>
 	<SFML/Graphics.hpp>
 	"Body.hpp"
 	"World.hpp"
 
-1553520466 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglebody.hpp
+1553552172 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglebody.hpp
 	<Box2D/Box2D.h>
 	<SFML/Graphics.hpp>
 	"Body.hpp"
@@ -676,4 +679,17 @@
 1551739600 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\util\random.hpp
 	<ctime>
 	<random>
+
+1553565526 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\fixture.hpp
+	<Box2D/Box2D.h>
+	<SFML/Graphics.hpp>
+	"Body.hpp"
+
+1553565382 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglefixture.cpp
+	"RectangleFixture.hpp"
+
+1553565396 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\rectanglefixture.hpp
+	<Box2D/Box2D.h>
+	<SFML/Graphics.hpp>
+	"Fixture.hpp"
 
