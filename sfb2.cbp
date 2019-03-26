@@ -46,6 +46,7 @@
 				</Linker>
 				<ExtraCommands>
 					<Add after="saveastemplate.bat" />
+					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
 		</Build>

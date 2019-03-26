@@ -10,7 +10,7 @@ using namespace sf;
 #include "RectangleFixture.hpp"
 class World;
 
-enum BodyType {
+enum class BodyType {
     StaticBody = 0,
     KinematicBody = 1,
     DynamicBody = 2

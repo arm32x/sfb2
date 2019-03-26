@@ -1,5 +1,9 @@
 # depslib dependency file v1.0
+<<<<<<< HEAD
 1553542274 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\main.cpp
+=======
+1553614876 source:i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\main.cpp
+>>>>>>> master
 	<algorithm>
 	<ctime>
 	<functional>
@@ -441,8 +445,12 @@
 	<ctime>
 	<random>
 
+<<<<<<< HEAD
 1553565416 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\world.hpp
 	<forward_list>
+=======
+1553614178 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\world.hpp
+>>>>>>> master
 	<functional>
 	<iostream>
 	<queue>
@@ -614,8 +622,13 @@
 1550678188 i:\school\gr. 10 – semester 2 pd. 2 – computer science\libraries\box2d\include\box2d\dynamics\joints\b2wheeljoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
+<<<<<<< HEAD
 1553565562 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\body.hpp
 	<vector>
+=======
+1553614140 i:\school\gr. 10 – semester 2 pd. 2 – computer science\projects\sfb2\sfb2\body.hpp
+	<bitset>
+>>>>>>> master
 	<Box2D/Box2D.h>
 	<SFML/Graphics.hpp>
 	"Fixture.hpp"
