@@ -7,7 +7,9 @@
 using namespace sf;
 
 #include "Fixture.hpp"
+#include "FixtureList.hpp"
 #include "RectangleFixture.hpp"
+#include "Utilities.hpp"
 class World;
 
 enum class BodyType {
@@ -69,7 +71,7 @@ class Body : public Drawable {
 		
 		virtual ~Body() = default;
 		
-		std::vector<std::reference_wrapper<Fixture>> getFixtureList() const;
+		FixtureList getFixtureList() const;
 
 	protected:
 		Body(b2Body* body, World& world);

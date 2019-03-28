@@ -110,8 +110,8 @@ bool Body::isTouching(Body& other) const {
 	return false;
 }
 bool Body::isTouching(const Vector2f& point) const {
-	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
-		if (internalFixture->TestPoint(b2Vec2(point.x / world.ppm, point.y / world.ppm))) return true;
+	for (Fixture& fixture : getFixtureList()) {
+		if (fixture.internalFixture->TestPoint(b2Vec2(point.x / world.ppm, point.y / world.ppm))) return true;
 	}
 	return false;
 }
@@ -124,24 +124,17 @@ void Body::setAngularDamping(float angularDamping) { internalBody->SetAngularDam
 bool Body::isActive() const { return internalBody->IsActive(); }
 void Body::setActive(bool active) { internalBody->SetActive(active); }
 
-// TODO: Implement ‘FixtureList’ wrapper around ‘internalBody->GetFixtureList()’ with iterators.
-std::vector<std::reference_wrapper<Fixture>> Body::getFixtureList() const {
-	std::vector<std::reference_wrapper<Fixture>> result;
-	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
-		result.push_back(std::ref(*static_cast<Fixture*>(internalFixture->GetUserData())));
-	}
-	return result;
+FixtureList Body::getFixtureList() const {
+	return FixtureList(internalBody->GetFixtureList());
 }
 
 void Body::update() {
-	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
-		Fixture& fixture = *static_cast<Fixture*>(internalFixture->GetUserData());
+	for (Fixture& fixture : getFixtureList()) {
 		fixture.update();
 	}
 }
 void Body::draw(RenderTarget& target, RenderStates states) const {
-	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
-		Fixture& fixture = *static_cast<Fixture*>(internalFixture->GetUserData());
+	for (Fixture& fixture : getFixtureList()) {
 		if (fixture.isVisible()) target.draw(fixture);
 	}
 }
