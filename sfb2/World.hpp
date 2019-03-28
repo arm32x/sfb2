@@ -10,11 +10,11 @@
 using namespace sf;
 
 #include "Body.hpp"
-class CircleBody;
-#include "CircleBody.hpp"
+/*class CircleBody;
+#include "CircleBody.hpp"*/
+#include "Fixture.hpp"
 class RectangleBody;
 #include "RectangleBody.hpp"
-#include "Fixture.hpp"
 
 class World : public Drawable {
 
@@ -29,8 +29,8 @@ class World : public Drawable {
 		RectangleBody& createRectangleBody(const Vector2f& position, const Vector2f& size, BodyType type);
 		RectangleBody& createRectangleBody(const FloatRect& rect, BodyType type);
 		
-		CircleBody& createCircleBody(float x, float y, float radius, BodyType type);
-		CircleBody& createCircleBody(const Vector2f& position, float radius, BodyType type);
+		/*CircleBody& createCircleBody(float x, float y, float radius, BodyType type);
+		CircleBody& createCircleBody(const Vector2f& position, float radius, BodyType type);*/
 		
 		Body& createBody(BodyType type);
 		

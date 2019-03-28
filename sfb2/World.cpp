@@ -33,7 +33,7 @@ RectangleBody& World::createRectangleBody(const FloatRect& rect, BodyType type) 
 	return createRectangleBody(rect.left + rect.width / 2.0f, rect.top + rect.height / 2.0f, rect.width, rect.height, type);
 }
 
-CircleBody& World::createCircleBody(float x, float y, float radius, BodyType type) {
+/*CircleBody& World::createCircleBody(float x, float y, float radius, BodyType type) {
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(x / ppm, y / ppm);
 	bodyDef.type = static_cast<b2BodyType>(type);
@@ -56,7 +56,7 @@ CircleBody& World::createCircleBody(float x, float y, float radius, BodyType typ
 }
 CircleBody& World::createCircleBody(const Vector2f& position, float radius, BodyType type) {
 	return createCircleBody(position.x, position.y, radius, type);
-}
+}*/
 
 void World::destroyBody(Body& body) {
 	internalWorld.DestroyBody(body.internalBody);
