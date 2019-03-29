@@ -6,30 +6,16 @@ World::World(const Vector2f& gravity, float pixelsPerMeter) : ppm(pixelsPerMeter
 World::World(float gravityDown, float pixelsPerMeter) : World(Vector2f(0.0f, gravityDown), pixelsPerMeter) { }
 
 RectangleBody& World::createRectangleBody(float x, float y, float width, float height, BodyType type) {
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(x / ppm, y / ppm);
-	bodyDef.type = static_cast<b2BodyType>(type);
-	bodyDef.linearDamping = 0.05f;
-	
-	b2PolygonShape bodyShape;
-	bodyShape.SetAsBox(width / ppm / 2.0f, height / ppm / 2.0f);
-	
-	b2FixtureDef fixDef;
-	fixDef.density = 1.0f;
-	fixDef.friction = 0.4f;
-	fixDef.restitution = 0.5f;
-	
-	fixDef.shape = &bodyShape;
-	b2Body* body = internalWorld.CreateBody(&bodyDef);
-	body->CreateFixture(&fixDef);
-	
-	RectangleBody* wrapper = new RectangleBody(Vector2f(width, height), body, *this);
-	return *wrapper;
+	Body& body = createBody(x, y, type);
+	body.createRectangleFixture(0, 0, width, height);
+	RectangleBody* ptr = new RectangleBody(body);
+	return *ptr;
 }
 RectangleBody& World::createRectangleBody(const Vector2f& position, const Vector2f& size, BodyType type) {
 	return createRectangleBody(position.x, position.y, size.x, size.y, type);
 }
 RectangleBody& World::createRectangleBody(const FloatRect& rect, BodyType type) {
+	// TODO: Replace this with a version that sets the origin of the fixture.
 	return createRectangleBody(rect.left + rect.width / 2.0f, rect.top + rect.height / 2.0f, rect.width, rect.height, type);
 }
 
@@ -57,6 +43,13 @@ RectangleBody& World::createRectangleBody(const FloatRect& rect, BodyType type) 
 CircleBody& World::createCircleBody(const Vector2f& position, float radius, BodyType type) {
 	return createCircleBody(position.x, position.y, radius, type);
 }*/
+
+Body& World::createBody(float x, float y, BodyType type) {
+	// TODO: Implement this.
+}
+Body& World::createBody(const Vector2f& position, BodyType type) {
+	return createBody(position.x, position.y, type);
+}
 
 void World::destroyBody(Body& body) {
 	internalWorld.DestroyBody(body.internalBody);

@@ -18,7 +18,9 @@ class RectangleBody : public Body, public RectangleFixture {
 		using Body::setRotation;
 
 	protected:
+		[[deprecated("The constructor taking in a Body& has a cleaner interface.")]]
 		RectangleBody(const Vector2f& size, b2Body* body, World& world);
+		RectangleBody(Body& body);
 		
 	private:
 		using Body::getFixtureList;

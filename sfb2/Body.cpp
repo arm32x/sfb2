@@ -4,7 +4,6 @@ Body::Body(b2Body* body, World& world) : world(world), internalBody(body) {
 	body->SetUserData(this);
 }
 
-// TODO: Add support for offset/origin.  Parameters x and y are currently unused.
 RectangleFixture& Body::createRectangleFixture(float x, float y, float width, float height) {
 	b2FixtureDef fixtureDef;
 	fixtureDef.density = 1.0f;
@@ -17,6 +16,7 @@ RectangleFixture& Body::createRectangleFixture(float x, float y, float width, fl
 	
 	b2Fixture* internalFixture = internalBody->CreateFixture(&fixtureDef);
 	RectangleFixture* wrapper = new RectangleFixture(Vector2f(width, height), internalFixture, *this);
+	wrapper->setOrigin(width - x, height - y);
 	return *wrapper;
 }
 RectangleFixture& Body::createRectangleFixture(const Vector2f& position, const Vector2f& size) {

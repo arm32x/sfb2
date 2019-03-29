@@ -32,7 +32,8 @@ class World : public Drawable {
 		/*CircleBody& createCircleBody(float x, float y, float radius, BodyType type);
 		CircleBody& createCircleBody(const Vector2f& position, float radius, BodyType type);*/
 		
-		Body& createBody(BodyType type);
+		Body& createBody(float x, float y, BodyType type);
+		Body& createBody(const Vector2f& position, BodyType type);
 		
 		void destroyBody(Body& body);
 
