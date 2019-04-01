@@ -6,50 +6,17 @@ World::World(const Vector2f& gravity, float pixelsPerMeter) : ppm(pixelsPerMeter
 World::World(float gravityDown, float pixelsPerMeter) : World(Vector2f(0.0f, gravityDown), pixelsPerMeter) { }
 
 RectangleBody& World::createRectangleBody(float x, float y, float width, float height, BodyType type) {
-	Body& body = createBody(x, y, type);
-	body.createRectangleFixture(0, 0, width, height);
-	RectangleBody* ptr = new RectangleBody(body);
-	return *ptr;
+	return *new RectangleBody(*this, x, y, width, height, type);
 }
 RectangleBody& World::createRectangleBody(const Vector2f& position, const Vector2f& size, BodyType type) {
-	return createRectangleBody(position.x, position.y, size.x, size.y, type);
+	return *new RectangleBody(*this, position, size, type);
 }
 RectangleBody& World::createRectangleBody(const FloatRect& rect, BodyType type) {
-	// TODO: Replace this with a version that sets the origin of the fixture.
-	return createRectangleBody(rect.left + rect.width / 2.0f, rect.top + rect.height / 2.0f, rect.width, rect.height, type);
+	return *new RectangleBody(*this, rect, type);
 }
 
-/*CircleBody& World::createCircleBody(float x, float y, float radius, BodyType type) {
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(x / ppm, y / ppm);
-	bodyDef.type = static_cast<b2BodyType>(type);
-	bodyDef.linearDamping = 0.05f;
-	
-	b2CircleShape bodyShape;
-	bodyShape.m_radius = radius / ppm;
-	
-	b2FixtureDef fixDef;
-	fixDef.density = 1.0f;
-	fixDef.friction = 0.4f;
-	fixDef.restitution = 0.5f;
-	
-	fixDef.shape = &bodyShape;
-	b2Body* body = internalWorld.CreateBody(&bodyDef);
-	body->CreateFixture(&fixDef);
-	
-	CircleBody* wrapper = new CircleBody(radius, body, *this);
-	return *wrapper;
-}
-CircleBody& World::createCircleBody(const Vector2f& position, float radius, BodyType type) {
-	return createCircleBody(position.x, position.y, radius, type);
-}*/
-
-Body& World::createBody(float x, float y, BodyType type) {
-	// TODO: Implement this.
-}
-Body& World::createBody(const Vector2f& position, BodyType type) {
-	return createBody(position.x, position.y, type);
-}
+Body& World::createBody(float x, float y, BodyType type) { return *new Body(*this, x, y, type); }
+Body& World::createBody(const Vector2f& position, BodyType type) { return *new Body(*this, position, type); }
 
 void World::destroyBody(Body& body) {
 	internalWorld.DestroyBody(body.internalBody);

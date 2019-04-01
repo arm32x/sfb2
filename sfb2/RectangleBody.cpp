@@ -1,18 +1,5 @@
 #include "RectangleBody.hpp"
 
-////////////////////////////////////////////////////////////////////////////////
-/// Creates a RectangleBody using already-initialized Box2D objects.
-/// @param size The size of the fixture.
-/// @param body The pre-initialized Box2D body.  Must have exactly one fixture.
-/// @param world The sfb2 World that this body was created in.
-/// @deprecated
-////////////////////////////////////////////////////////////////////////////////
-RectangleBody::RectangleBody(const Vector2f& size, b2Body* body, World& world) : Body(body, world), RectangleFixture(size, body->GetFixtureList(), *this) { }
-
-////////////////////////////////////////////////////////////////////////////////
-/// Creates a RectangleBody using the properties of the Body& passed in.
-/// @warning This will throw an std::bad_cast exception if the body’s first
-/// fixture is not a RectangleFixture.
-/// @param body The body to create the RectangleBody out of.
-////////////////////////////////////////////////////////////////////////////////
-RectangleBody::RectangleBody(Body& body) : Body(body), RectangleFixture(dynamic_cast<RectangleFixture&>(body.getFixtureList()[0])) { }
+RectangleBody::RectangleBody(World& world, float x, float y, float width, float height, BodyType type) : Body(world, x, y, type), RectangleFixture(*this, 0, 0, width, height) { }
+RectangleBody::RectangleBody(World& world, const Vector2f& position, const Vector2f& size, BodyType type) : Body(world, position, type), RectangleFixture(*this, Vector2f(0, 0), size) { }
+RectangleBody::RectangleBody(World& world, const FloatRect& rect, BodyType type) : Body(world, rect.left, rect.top, type), RectangleFixture(*this, rect.width / 2.0f, rect.height / 2.0f, rect.width, rect.height) { }

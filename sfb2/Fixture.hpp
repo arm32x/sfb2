@@ -25,7 +25,7 @@ class Fixture : public Drawable {
 		void setVisible(bool visible);
 		
 	protected:
-		Fixture(b2Fixture* fixture, Body& body);
+		Fixture(Body& body);
 		
 		virtual void update() { }
 	

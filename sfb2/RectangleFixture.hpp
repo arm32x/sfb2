@@ -27,7 +27,9 @@ class RectangleFixture : public Fixture, private RectangleShape {
 		using RectangleShape::setTextureRect;
 		
 	protected:
-		RectangleFixture(const Vector2f& size, b2Fixture* fixture, Body& body);
+		RectangleFixture(Body& body, float x, float y, float width, float height);
+		RectangleFixture(Body& body, const Vector2f& position, const Vector2f& size);
+		RectangleFixture(Body& body, const FloatRect& rect);
 		
 		void update();
 		void draw(RenderTarget& target, RenderStates states) const;

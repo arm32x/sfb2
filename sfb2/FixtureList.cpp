@@ -54,3 +54,6 @@ const_iterator::reference FixtureList::operator[](const_iterator::size_type inde
 	std::advance(iter, index);
 	return *iter;
 }
+
+iterator::reference FixtureList::front() { return *begin(); }
+const_iterator::reference FixtureList::front() const { return *cbegin(); }

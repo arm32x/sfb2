@@ -1,29 +1,24 @@
 #include "Body.hpp"
 
-Body::Body(b2Body* body, World& world) : world(world), internalBody(body) {
-	body->SetUserData(this);
+Body::Body(World& world, float x, float y, BodyType type) : world(world) {
+	b2BodyDef def;
+	def.position.Set(x / world.ppm, y / world.ppm);
+	def.type = static_cast<b2BodyType>(type);
+	def.linearDamping = 0.05f;
+	
+	internalBody = world.internalWorld.CreateBody(&def);
+	internalBody->SetUserData(this);
 }
+Body::Body(World& world, const Vector2f& position, BodyType type) : Body(world, position.x, position.y, type) { }
 
 RectangleFixture& Body::createRectangleFixture(float x, float y, float width, float height) {
-	b2FixtureDef fixtureDef;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.4f;
-	fixtureDef.restitution = 0.5f;
-	
-	b2PolygonShape shape;
-	shape.SetAsBox(width / world.ppm / 2.0f, height / world.ppm / 2.0f, b2Vec2(x / world.ppm, y / world.ppm), 0.0f);
-	fixtureDef.shape = &shape;
-	
-	b2Fixture* internalFixture = internalBody->CreateFixture(&fixtureDef);
-	RectangleFixture* wrapper = new RectangleFixture(Vector2f(width, height), internalFixture, *this);
-	wrapper->setOrigin(width - x, height - y);
-	return *wrapper;
+	return *new RectangleFixture(*this, x, y, width, height);
 }
 RectangleFixture& Body::createRectangleFixture(const Vector2f& position, const Vector2f& size) {
-	return createRectangleFixture(position.x, position.y, size.x, size.y);
+	return *new RectangleFixture(*this, position, size);
 }
 RectangleFixture& Body::createRectangleFixture(const FloatRect& rect) {
-	return createRectangleFixture(rect.left + rect.width / 2.0f, rect.top + rect.height / 2.0f, rect.width, rect.height);
+	return *new RectangleFixture(*this, rect);
 }
 
 Vector2f Body::getPosition() const {

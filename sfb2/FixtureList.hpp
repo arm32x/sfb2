@@ -65,6 +65,9 @@ class FixtureList {
 		iterator::reference operator[](iterator::size_type index);
 		const_iterator::reference operator[](const_iterator::size_type index) const;
 		
+		iterator::reference front();
+		const_iterator::reference front() const;
+		
 		FixtureList(b2Fixture* internalList);
 		
 	private:

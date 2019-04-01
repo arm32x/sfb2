@@ -74,7 +74,8 @@ class Body : public Drawable {
 		FixtureList getFixtureList() const;
 
 	protected:
-		Body(b2Body* body, World& world);
+		Body(World& world, float x, float y, BodyType type);
+		Body(World& world, const Vector2f& position, BodyType type);
 		
 		void update();
 		void draw(RenderTarget& target, RenderStates states) const;

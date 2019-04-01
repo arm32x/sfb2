@@ -1,8 +1,8 @@
 #include "Fixture.hpp"
 #include "Body.hpp"
 
-Fixture::Fixture(b2Fixture* fixture, Body& body) : body(body), internalFixture(fixture) {
-	internalFixture->SetUserData(this);
+Fixture::Fixture(Body& body) : body(body) {
+	
 }
 
 bool Fixture::isTouching(const Vector2f& point) const {
