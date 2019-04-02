@@ -33,9 +33,9 @@ int main() {
 	
 	world.createRectangleBody(FloatRect(0.0f, window.getSize().y - 10.0f, window.getSize().x, 10.0f), BodyType::KinematicBody);
 	
-	CircleBody& demoCircle = world.createCircleBody(Vector2f(window.getSize()) / 2.0f, 50.0f, BodyType::DynamicBody);
-	demoCircle.setFillColor(Color::Green);
-	demoCircle.setAngularVelocity(-360.0f);
+	RectangleBody& demoRect = world.createRectangleBody(Vector2f(window.getSize()) / 2.0f, Vector2f(100.0f, 100.0f), BodyType::DynamicBody);
+	demoRect.setFillColor(Color::Red);
+	demoRect.setRotation(15.0f);
 	
 	Clock frameClock; ///< Responsible for calculating the timestep for physics calculations.
 	while (window.isOpen()) {
