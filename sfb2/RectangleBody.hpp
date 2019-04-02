@@ -5,30 +5,26 @@
 using namespace sf;
 
 #include "Body.hpp"
-#include "Utilities.hpp"
-#include "World.hpp"
-
+#include "RectangleFixture.hpp"
 class World;
 
-class RectangleBody : public Body {
+class RectangleBody : public Body, public RectangleFixture {
 	friend class World;
 	
-public:
-	const Color& getFillColor() const;
-	void setFillColor(const Color& color);
-	const Color& getOutlineColor() const;
-	void setOutlineColor(const Color& color);
-	float getOutlineThickness() const;
-	void setOutlineThickness(float thickness);
-	
-	const Vector2f& getSize() const;
+	public:
+		using Body::getPosition;
+		using Body::setPosition;
+		using Body::getRotation;
+		using Body::setRotation;
 
-protected:
-	RectangleShape internalShape;
-
-    RectangleBody(const Vector2f& size, b2Body* body, World& world);
-    
-    void update();
-    void draw(RenderTarget& target, RenderStates states) const;
+	protected:
+		RectangleBody(World& world, float x, float y, float width, float height, BodyType type);
+		RectangleBody(World& world, const Vector2f& position, const Vector2f& size, BodyType type);
+		RectangleBody(World& world, const FloatRect& rect, BodyType type);
+		
+	private:
+		using Body::createRectangleFixture;
+		using Body::createCircleFixture;
+		using Body::getFixtureList;
     
 };

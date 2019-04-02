@@ -1,23 +1,5 @@
 #include "RectangleBody.hpp"
 
-RectangleBody::RectangleBody(const Vector2f& size, b2Body* body, World& world) : Body(body, world), internalShape(size) {
-	internalShape.setOrigin(size.x / 2.0f, size.y / 2.0f);
-	update();
-}
-
-const Color& RectangleBody::getFillColor() const { return internalShape.getFillColor(); }
-void RectangleBody::setFillColor(const Color& color) { internalShape.setFillColor(color); }
-const Color& RectangleBody::getOutlineColor() const { return internalShape.getOutlineColor(); }
-void RectangleBody::setOutlineColor(const Color& color) { internalShape.setOutlineColor(color); }
-float RectangleBody::getOutlineThickness() const { return internalShape.getOutlineThickness(); }
-void RectangleBody::setOutlineThickness(float thickness) { internalShape.setOutlineThickness(thickness); }
-
-const Vector2f& RectangleBody::getSize() const { return internalShape.getSize(); }
-
-void RectangleBody::update() {
-	internalShape.setPosition(getPosition());
-	internalShape.setRotation(getRotation());
-}
-void RectangleBody::draw(RenderTarget& target, RenderStates states) const {
-	target.draw(internalShape);
-}
+RectangleBody::RectangleBody(World& world, float x, float y, float width, float height, BodyType type) : Body(world, x, y, type), RectangleFixture(*this, 0, 0, width, height) { }
+RectangleBody::RectangleBody(World& world, const Vector2f& position, const Vector2f& size, BodyType type) : Body(world, position, type), RectangleFixture(*this, Vector2f(0, 0), size) { }
+RectangleBody::RectangleBody(World& world, const FloatRect& rect, BodyType type) : Body(world, rect.left, rect.top, type), RectangleFixture(*this, rect.width / 2.0f, rect.height / 2.0f, rect.width, rect.height) { }

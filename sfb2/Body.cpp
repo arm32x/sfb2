@@ -1,8 +1,21 @@
 #include "Body.hpp"
 
-Body::Body(b2Body* body, World& world) : world(world), internalBody(body) {
-	body->SetUserData(this);
+Body::Body(World& world, float x, float y, BodyType type) : world(world) {
+	b2BodyDef def;
+	def.position.Set(x / world.ppm, y / world.ppm);
+	def.type = static_cast<b2BodyType>(type);
+	def.linearDamping = 0.05f;
+	
+	internalBody = world.internalWorld.CreateBody(&def);
+	internalBody->SetUserData(this);
 }
+Body::Body(World& world, const Vector2f& position, BodyType type) : Body(world, position.x, position.y, type) { }
+
+RectangleFixture& Body::createRectangleFixture(float x, float y, float width, float height) { return *new RectangleFixture(*this, x, y, width, height); }
+RectangleFixture& Body::createRectangleFixture(const Vector2f& position, const Vector2f& size) { return *new RectangleFixture(*this, position, size); }
+RectangleFixture& Body::createRectangleFixture(const FloatRect& rect) { return *new RectangleFixture(*this, rect); }
+CircleFixture& Body::createCircleFixture(float x, float y, float radius) { return *new CircleFixture(*this, x, y, radius); }
+CircleFixture& Body::createCircleFixture(const Vector2f& position, float radius) { return *new CircleFixture(*this, position.x, position.y, radius); }
 
 Vector2f Body::getPosition() const {
 	return Vector2f(internalBody->GetPosition().x * world.ppm, internalBody->GetPosition().y * world.ppm);
@@ -88,8 +101,8 @@ bool Body::isTouching(Body& other) const {
 	return false;
 }
 bool Body::isTouching(const Vector2f& point) const {
-	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
-		if (internalFixture->TestPoint(b2Vec2(point.x / world.ppm, point.y / world.ppm))) return true;
+	for (Fixture& fixture : getFixtureList()) {
+		if (fixture.internalFixture->TestPoint(b2Vec2(point.x / world.ppm, point.y / world.ppm))) return true;
 	}
 	return false;
 }
@@ -99,22 +112,23 @@ void Body::setLinearDamping(float linearDamping) { internalBody->SetLinearDampin
 float Body::getAngularDamping() const { return internalBody->GetAngularDamping(); }
 void Body::setAngularDamping(float angularDamping) { internalBody->SetAngularDamping(angularDamping); }
 
-bool Body::isSensor() const {
-	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
-		if (!internalFixture->IsSensor()) return false;
-	}
-	return true;
-}
-void Body::setSensor(bool value) {
-	for (b2Fixture* internalFixture = internalBody->GetFixtureList(); internalFixture != nullptr; internalFixture = internalFixture->GetNext()) {
-		internalFixture->SetSensor(value);
-	}
-}
-
 bool Body::isActive() const { return internalBody->IsActive(); }
 void Body::setActive(bool active) { internalBody->SetActive(active); }
-bool Body::isVisible() const { return visible; }
-void Body::setVisible(bool visible) { this->visible = visible; }
+
+FixtureList Body::getFixtureList() const {
+	return FixtureList(internalBody->GetFixtureList());
+}
+
+void Body::update() {
+	for (Fixture& fixture : getFixtureList()) {
+		fixture.update();
+	}
+}
+void Body::draw(RenderTarget& target, RenderStates states) const {
+	for (Fixture& fixture : getFixtureList()) {
+		if (fixture.isVisible()) target.draw(fixture);
+	}
+}
 
 bool operator==(const Body& lhs, const Body& rhs) { return lhs.internalBody == rhs.internalBody; }
 bool operator!=(const Body& lhs, const Body& rhs) { return !(lhs == rhs); }

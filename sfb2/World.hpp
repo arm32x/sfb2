@@ -1,5 +1,6 @@
 #pragma once
 
+#include <forward_list>
 #include <functional>
 #include <iostream>
 #include <queue>
@@ -9,11 +10,11 @@
 using namespace sf;
 
 #include "Body.hpp"
-#include "CircleBody.hpp"
-#include "RectangleBody.hpp"
-
 class CircleBody;
+#include "CircleBody.hpp"
+#include "Fixture.hpp"
 class RectangleBody;
+#include "RectangleBody.hpp"
 
 class World : public Drawable {
 
@@ -27,16 +28,17 @@ class World : public Drawable {
 		RectangleBody& createRectangleBody(float x, float y, float width, float height, BodyType type);
 		RectangleBody& createRectangleBody(const Vector2f& position, const Vector2f& size, BodyType type);
 		RectangleBody& createRectangleBody(const FloatRect& rect, BodyType type);
-		
 		CircleBody& createCircleBody(float x, float y, float radius, BodyType type);
 		CircleBody& createCircleBody(const Vector2f& position, float radius, BodyType type);
+		Body& createBody(float x, float y, BodyType type);
+		Body& createBody(const Vector2f& position, BodyType type);
 		
 		void destroyBody(Body& body);
 
 		void step(Time timeStep, int velocityIterations = 8, int positionIterations = 3);
 		
-		std::function<void(Body&, Body&)> onContactBegin;
-		std::function<void(Body&, Body&)> onContactEnd;
+		std::function<void(Fixture&, Fixture&)> onContactBegin;
+		std::function<void(Fixture&, Fixture&)> onContactEnd;
 
 	protected:
 		void draw(RenderTarget& target, RenderStates states) const;
