@@ -1,4 +1,5 @@
 #include "CircleFixture.hpp"
+#include "Body.hpp"
 
 CircleFixture::CircleFixture(Body& body, float x, float y, float radius) : Fixture(body), CircleShape(radius) {
 	b2FixtureDef def;

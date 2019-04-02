@@ -6,7 +6,6 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
-class CircleFixture;
 #include "CircleFixture.hpp"
 #include "Fixture.hpp"
 #include "FixtureList.hpp"

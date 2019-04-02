@@ -4,8 +4,6 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
-#include "Body.hpp"
-class Fixture;
 #include "Fixture.hpp"
 
 class CircleFixture : public Fixture, private CircleShape {
