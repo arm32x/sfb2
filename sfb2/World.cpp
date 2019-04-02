@@ -5,58 +5,13 @@ World::World(const Vector2f& gravity, float pixelsPerMeter) : ppm(pixelsPerMeter
 }
 World::World(float gravityDown, float pixelsPerMeter) : World(Vector2f(0.0f, gravityDown), pixelsPerMeter) { }
 
-RectangleBody& World::createRectangleBody(float x, float y, float width, float height, BodyType type) {
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(x / ppm, y / ppm);
-	bodyDef.type = static_cast<b2BodyType>(type);
-	bodyDef.linearDamping = 0.05f;
-	
-	b2PolygonShape bodyShape;
-	bodyShape.SetAsBox(width / ppm / 2.0f, height / ppm / 2.0f);
-	
-	b2FixtureDef fixDef;
-	fixDef.density = 1.0f;
-	fixDef.friction = 0.4f;
-	fixDef.restitution = 0.5f;
-	
-	fixDef.shape = &bodyShape;
-	b2Body* body = internalWorld.CreateBody(&bodyDef);
-	body->CreateFixture(&fixDef);
-	
-	RectangleBody* wrapper = new RectangleBody(Vector2f(width, height), body, *this);
-	return *wrapper;
-}
-RectangleBody& World::createRectangleBody(const Vector2f& position, const Vector2f& size, BodyType type) {
-	return createRectangleBody(position.x, position.y, size.x, size.y, type);
-}
-RectangleBody& World::createRectangleBody(const FloatRect& rect, BodyType type) {
-	return createRectangleBody(rect.left + rect.width / 2.0f, rect.top + rect.height / 2.0f, rect.width, rect.height, type);
-}
-
-CircleBody& World::createCircleBody(float x, float y, float radius, BodyType type) {
-	b2BodyDef bodyDef;
-	bodyDef.position.Set(x / ppm, y / ppm);
-	bodyDef.type = static_cast<b2BodyType>(type);
-	bodyDef.linearDamping = 0.05f;
-	
-	b2CircleShape bodyShape;
-	bodyShape.m_radius = radius / ppm;
-	
-	b2FixtureDef fixDef;
-	fixDef.density = 1.0f;
-	fixDef.friction = 0.4f;
-	fixDef.restitution = 0.5f;
-	
-	fixDef.shape = &bodyShape;
-	b2Body* body = internalWorld.CreateBody(&bodyDef);
-	body->CreateFixture(&fixDef);
-	
-	CircleBody* wrapper = new CircleBody(radius, body, *this);
-	return *wrapper;
-}
-CircleBody& World::createCircleBody(const Vector2f& position, float radius, BodyType type) {
-	return createCircleBody(position.x, position.y, radius, type);
-}
+RectangleBody& World::createRectangleBody(float x, float y, float width, float height, BodyType type) { return *new RectangleBody(*this, x, y, width, height, type); }
+RectangleBody& World::createRectangleBody(const Vector2f& position, const Vector2f& size, BodyType type) { return *new RectangleBody(*this, position, size, type); }
+RectangleBody& World::createRectangleBody(const FloatRect& rect, BodyType type) { return *new RectangleBody(*this, rect, type); }
+CircleBody& World::createCircleBody(float x, float y, float radius, BodyType type) { return *new CircleBody(*this, x, y, radius, type); }
+CircleBody& World::createCircleBody(const Vector2f& position, float radius, BodyType type) { return *new CircleBody(*this, position, radius, type); }
+Body& World::createBody(float x, float y, BodyType type) { return *new Body(*this, x, y, type); }
+Body& World::createBody(const Vector2f& position, BodyType type) { return *new Body(*this, position, type); }
 
 void World::destroyBody(Body& body) {
 	internalWorld.DestroyBody(body.internalBody);
@@ -68,19 +23,19 @@ void World::step(Time timeStep, int velocityIterations, int positionIterations) 
 	std::queue<b2Contact*>* queue;
 	queue = &contactListener.queueBeginContact;
 	for (b2Contact* contact = queue->front(); !queue->empty(); queue->pop(), contact = queue->front()) {
-		Body& bodyA = *static_cast<Body*>(contact->GetFixtureA()->GetBody()->GetUserData());
-		Body& bodyB = *static_cast<Body*>(contact->GetFixtureB()->GetBody()->GetUserData());
-		if (bodyA.onContactBegin != nullptr) bodyA.onContactBegin(bodyB);
-		if (bodyB.onContactBegin != nullptr) bodyB.onContactBegin(bodyA);
-		if (this->onContactBegin != nullptr) this->onContactBegin(bodyA, bodyB);
+		Fixture& fixtureA = *static_cast<Fixture*>(contact->GetFixtureA()->GetUserData());
+		Fixture& fixtureB = *static_cast<Fixture*>(contact->GetFixtureB()->GetUserData());
+		if (fixtureA.onContactEnd != nullptr) fixtureA.onContactEnd(fixtureB);
+		if (fixtureB.onContactEnd != nullptr) fixtureB.onContactEnd(fixtureA);
+		if (this->onContactEnd != nullptr) this->onContactEnd(fixtureA, fixtureB);
 	}
 	queue = &contactListener.queueEndContact;
 	for (b2Contact* contact = queue->front(); !queue->empty(); queue->pop(), contact = queue->front()) {
-		Body& bodyA = *static_cast<Body*>(contact->GetFixtureA()->GetBody()->GetUserData());
-		Body& bodyB = *static_cast<Body*>(contact->GetFixtureB()->GetBody()->GetUserData());
-		if (bodyA.onContactEnd != nullptr) bodyA.onContactEnd(bodyB);
-		if (bodyB.onContactEnd != nullptr) bodyB.onContactEnd(bodyA);
-		if (this->onContactEnd != nullptr) this->onContactEnd(bodyA, bodyB);
+		Fixture& fixtureA = *static_cast<Fixture*>(contact->GetFixtureA()->GetUserData());
+		Fixture& fixtureB = *static_cast<Fixture*>(contact->GetFixtureB()->GetUserData());
+		if (fixtureA.onContactEnd != nullptr) fixtureA.onContactEnd(fixtureB);
+		if (fixtureB.onContactEnd != nullptr) fixtureB.onContactEnd(fixtureA);
+		if (this->onContactEnd != nullptr) this->onContactEnd(fixtureA, fixtureB);
 	}
 	for (b2Body* internalBody = internalWorld.GetBodyList(); internalBody != nullptr; internalBody = internalBody->GetNext()) {
 		Body& body = *static_cast<Body*>(internalBody->GetUserData());
@@ -90,6 +45,6 @@ void World::step(Time timeStep, int velocityIterations, int positionIterations) 
 void World::draw(RenderTarget& target, RenderStates states) const {
 	for (const b2Body* internalBody = internalWorld.GetBodyList(); internalBody != nullptr; internalBody = internalBody->GetNext()) {
 		Body& body = *static_cast<Body*>(internalBody->GetUserData());
-		if (body.isVisible()) target.draw(body);
+		target.draw(body);
 	}
 }
