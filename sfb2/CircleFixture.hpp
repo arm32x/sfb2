@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
+#include "Body.hpp"
 class Fixture;
 #include "Fixture.hpp"
 
@@ -27,9 +28,10 @@ class CircleFixture : public Fixture, private CircleShape {
 		using CircleShape::setTextureRect;
 		
 	protected:
-		CircleFixture(float radius, b2Fixture* fixture, Body& body);
+		CircleFixture(Body& body, float x, float y, float radius);
+		CircleFixture(Body& body, const Vector2f& position, float radius);
 		
-		void update();
+		virtual void update();
 		void draw(RenderTarget& target, RenderStates states) const;
-		
+	
 };

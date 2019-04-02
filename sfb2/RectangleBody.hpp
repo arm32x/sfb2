@@ -23,7 +23,8 @@ class RectangleBody : public Body, public RectangleFixture {
 		RectangleBody(World& world, const FloatRect& rect, BodyType type);
 		
 	private:
-		using Body::getFixtureList;
 		using Body::createRectangleFixture;
+		using Body::createCircleFixture;
+		using Body::getFixtureList;
     
 };

@@ -6,6 +6,8 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
+class CircleFixture;
+#include "CircleFixture.hpp"
 #include "Fixture.hpp"
 #include "FixtureList.hpp"
 #include "RectangleFixture.hpp"
@@ -29,6 +31,8 @@ class Body : public Drawable {
 		RectangleFixture& createRectangleFixture(float x, float y, float width, float height);
 		RectangleFixture& createRectangleFixture(const Vector2f& position, const Vector2f& size);
 		RectangleFixture& createRectangleFixture(const FloatRect& rect);
+		CircleFixture& createCircleFixture(float x, float y, float radius);
+		CircleFixture& createCircleFixture(const Vector2f& position, float radius);
 		
 		Vector2f getPosition() const;
 		void setPosition(float x, float y);

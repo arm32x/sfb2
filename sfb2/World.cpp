@@ -5,16 +5,11 @@ World::World(const Vector2f& gravity, float pixelsPerMeter) : ppm(pixelsPerMeter
 }
 World::World(float gravityDown, float pixelsPerMeter) : World(Vector2f(0.0f, gravityDown), pixelsPerMeter) { }
 
-RectangleBody& World::createRectangleBody(float x, float y, float width, float height, BodyType type) {
-	return *new RectangleBody(*this, x, y, width, height, type);
-}
-RectangleBody& World::createRectangleBody(const Vector2f& position, const Vector2f& size, BodyType type) {
-	return *new RectangleBody(*this, position, size, type);
-}
-RectangleBody& World::createRectangleBody(const FloatRect& rect, BodyType type) {
-	return *new RectangleBody(*this, rect, type);
-}
-
+RectangleBody& World::createRectangleBody(float x, float y, float width, float height, BodyType type) { return *new RectangleBody(*this, x, y, width, height, type); }
+RectangleBody& World::createRectangleBody(const Vector2f& position, const Vector2f& size, BodyType type) { return *new RectangleBody(*this, position, size, type); }
+RectangleBody& World::createRectangleBody(const FloatRect& rect, BodyType type) { return *new RectangleBody(*this, rect, type); }
+CircleBody& World::createCircleBody(float x, float y, float radius, BodyType type) { return *new CircleBody(*this, x, y, radius, type); }
+CircleBody& World::createCircleBody(const Vector2f& position, float radius, BodyType type) { return *new CircleBody(*this, position, radius, type); }
 Body& World::createBody(float x, float y, BodyType type) { return *new Body(*this, x, y, type); }
 Body& World::createBody(const Vector2f& position, BodyType type) { return *new Body(*this, position, type); }
 

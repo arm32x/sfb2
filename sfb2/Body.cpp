@@ -11,15 +11,11 @@ Body::Body(World& world, float x, float y, BodyType type) : world(world) {
 }
 Body::Body(World& world, const Vector2f& position, BodyType type) : Body(world, position.x, position.y, type) { }
 
-RectangleFixture& Body::createRectangleFixture(float x, float y, float width, float height) {
-	return *new RectangleFixture(*this, x, y, width, height);
-}
-RectangleFixture& Body::createRectangleFixture(const Vector2f& position, const Vector2f& size) {
-	return *new RectangleFixture(*this, position, size);
-}
-RectangleFixture& Body::createRectangleFixture(const FloatRect& rect) {
-	return *new RectangleFixture(*this, rect);
-}
+RectangleFixture& Body::createRectangleFixture(float x, float y, float width, float height) { return *new RectangleFixture(*this, x, y, width, height); }
+RectangleFixture& Body::createRectangleFixture(const Vector2f& position, const Vector2f& size) { return *new RectangleFixture(*this, position, size); }
+RectangleFixture& Body::createRectangleFixture(const FloatRect& rect) { return *new RectangleFixture(*this, rect); }
+CircleFixture& Body::createCircleFixture(float x, float y, float radius) { return *new CircleFixture(*this, x, y, radius); }
+CircleFixture& Body::createCircleFixture(const Vector2f& position, float radius) { return *new CircleFixture(*this, position.x, position.y, radius); }
 
 Vector2f Body::getPosition() const {
 	return Vector2f(internalBody->GetPosition().x * world.ppm, internalBody->GetPosition().y * world.ppm);

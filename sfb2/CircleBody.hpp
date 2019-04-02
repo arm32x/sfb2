@@ -16,12 +16,14 @@ class CircleBody : public Body, public CircleFixture {
 		using Body::setPosition;
 		using Body::getRotation;
 		using Body::setRotation;
-
+		
 	protected:
-		CircleBody(float radius, b2Body* body, World& world);
+		CircleBody(World& world, float x, float y, float radius, BodyType type);
+		CircleBody(World& world, const Vector2f& position, float radius, BodyType type);
 		
 	private:
-		using Body::getFixtureList;
 		using Body::createRectangleFixture;
-    
+		using Body::createCircleFixture;
+		using Body::getFixtureList;
+	
 };

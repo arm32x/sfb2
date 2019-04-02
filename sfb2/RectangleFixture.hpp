@@ -31,7 +31,7 @@ class RectangleFixture : public Fixture, private RectangleShape {
 		RectangleFixture(Body& body, const Vector2f& position, const Vector2f& size);
 		RectangleFixture(Body& body, const FloatRect& rect);
 		
-		void update();
+		virtual void update();
 		void draw(RenderTarget& target, RenderStates states) const;
 		
 };
